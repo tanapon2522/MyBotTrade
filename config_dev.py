@@ -1,6 +1,14 @@
 API_BINANCE_KEY="cXl8CbhhJVy2Gm8feXERfqiVivimTkM7XGLO7Z17uogZQPm1Q5R1gdQ5upG6ABAP"
 API_BINANCE_SECRET = "rL2diYJ84IDD1W1cNrHMgy4I9vVvD5MbB3NJGDJmINNrkNlzXH3djSHw1KqsVdw4"
 
+
+API_LINE_KEY = "cy8Vy9rQQotstI5E1rQZ08"
+API_CLIENT_SECRET = "iqeoS5U8urxTHVSDHbVaCq0Ddddr2Li1XD4IWOkIje2"
+LINE_NOTIFY_TOKEN = "a1O4pHRieDDBGpElsK4aAoJZhGdbsWgeWsmbbTfnUnh"
+
+LINE_BOT_ACCESS_TOKEN = "qypXLFIvmrVha9RHwNsprpqTv0D9ZLM7MiJZnHVxMQcdgux5g7uzSfBfFT9R/37lL3Qrp5kd0r27RFFwqSXbIoYwoSJSCjqiz0tXgHQBIAqkiuiSWNN8bMUiFeGOk07FuYcUcQkPqFx3ehMivc2xJAdB04t89/1O/w1cDnyilFU="
+LINE_BOT_CHANNEL_SECRET = "53dda14d2a2a334fc43228c08fefe113"
+
 from firebase import Firebase
 
 firebaseConfig = {
@@ -19,11 +27,11 @@ firebaseClient = Firebase(firebaseConfig)
 auth = firebaseClient.auth()
 #user = auth.sign_in_with_email_and_password("mybot@gmail.com","12345678")
 
-API_LINE_KEY = "cy8Vy9rQQotstI5E1rQZ08"
-API_CLIENT_SECRET = "iqeoS5U8urxTHVSDHbVaCq0Ddddr2Li1XD4IWOkIje2"
-LINE_NOTIFY_TOKEN = "a1O4pHRieDDBGpElsK4aAoJZhGdbsWgeWsmbbTfnUnh"
-
-LINE_BOT_ACCESS_TOKEN = "7Y6IvPqynkGeQ3v78k7DJ436ZLDW2R4LGjEbl41WKfNfqvktA7SScWWlAX2lz0HBMa/+670LgxKz8c9kt9BImnLXK0LLj7FsEOVlSoPP7U/AdvluniA629fGGPu304QKPltB4gRvKQ0AtEktIrNE0QdB04t89/1O/w1cDnyilFU="
-LINE_BOT_CHANNEL_SECRET = "8c6222e2c5d8c3ee76fdc98c17f4deac"
-
-
+# ทดสอบ
+if __name__ == '__main__':
+  db = firebaseClient.database()
+  data = {
+    "name":"TEST"
+  }
+  user = auth.refresh(user['refreshToken'])
+  results = db.child("users").push(data,user['idToken'])

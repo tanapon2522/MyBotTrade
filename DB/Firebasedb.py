@@ -26,3 +26,11 @@ def GetInitialValue(symbols):
         WriteInitialValue(symbols=symbols, initialValue=0)
         res = db.get().val()[symbols]["initialValue"]
         return res
+
+def UpdateSettingBot(key,value):
+    if key == "run":
+        data = {"run" : value}
+        db.child("SETTINGBOT").update(data)
+    elif key == "Positionsize":
+        data = {"Positionsize" : value}
+        db.child("SETTINGBOT").update(data)
