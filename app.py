@@ -30,7 +30,7 @@ def SIGNALS_RECEIVER():
         # get data firebase เพื่อดูว่า Autotrading == true ??
         msg = ReceiveSignals(signal_data_dict= json_msg)
 
-        sendmsg(msg=json_msg)
+        sendmsg(msg=str(json_msg))
         sendmsg(msg=msg)
 
         # สร้างฟังก์ชั่น ในการจัดการข้อมูล

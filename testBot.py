@@ -77,22 +77,23 @@ def ReceiveSignals(signal_data_dict):
 
 if __name__ == "__main__":
 
-    time_alert = time.asctime()
-    data = {'SYMBOL':"BTCUSDT",
-    'TIME': time_alert,
-    'SIGNALS':'buy',
-    'POSITION_SIZE':0.00361337}
+    # time_alert = time.asctime()
+    # data = {'SYMBOL':"BTCUSDT",
+    # 'TIME': time_alert,
+    # 'SIGNALS':'buy',
+    # 'POSITION_SIZE':0.00361337}
     
-    #msg = ReceiveSignals(signal_data_dict=data)
-    if data["SIGNALS"] == "sell":
-       print(data["SYMBOL"])
-       print("\n" + "SELL NOW")
-    else:
-       print(data["SYMBOL"])
-       print("\n" + "BUY NOW")
+    msg = ReceiveSignals(signal_data_dict=data)
+
+    # if data["SIGNALS"] == "sell":
+    #    print(data["SYMBOL"])
+    #    print("\n" + "SELL NOW")
+    # else:
+    #    print(data["SYMBOL"])
+    #    print("\n" + "BUY NOW")
 
 
-    order = BUY(symbol="DOGEUSDT",position_size=71.428)
+    # order = BUY(symbol="DOGEUSDT",position_size=71.428)
     #order = SELL(symbol="BTCUSDT")
     #print(order)
 
