@@ -34,3 +34,7 @@ def UpdateSettingBot(key,value):
     elif key == "Positionsize":
         data = {"Positionsize" : value}
         db.child("SETTINGBOT").update(data)
+
+def GetDataSettingBot(key):
+    res = db.get().val()["SETTINGBOT"][key]
+    return res

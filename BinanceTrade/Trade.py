@@ -1,9 +1,12 @@
 from binance.client import Client
+import time
 
 try :
     from config_dev import API_BINANCE_KEY , API_BINANCE_SECRET
 except Exception:
     from config_prod import API_BINANCE_KEY , API_BINANCE_SECRET
+
+from DB.Firebasedb import GetDataSettingBot
 
 client = Client( API_BINANCE_KEY , API_BINANCE_SECRET )
 
@@ -64,6 +67,16 @@ def SELL(symbol,position_size=0,sell_all=True):
                     return "เกิดข้อผิดพลาด"
                
 def ReceiveSignals(signal_data_dict):
+
+    signal_data_dict['POSITION_SIZE'] = float(GetDataSettingBot(key="Positionsize"))
+    prices = client.get_all_tickers()
+    for p in prices:     
+        if p["symbol"] == signal_data_dict["SYMBOL"]:
+            print(p['symbol'],float(p['price']))
+            signal_data_dict['POSITION_SIZE'] = signal_data_dict['POSITION_SIZE']/float(p['price'])
+        
+    signal_data_dict['TIME'] = str(time.asctime())
+
     if signal_data_dict["SIGNALS"] == "buy":
         try :   
             BUY(symbol=signal_data_dict["SYMBOL"],position_size=signal_data_dict["POSITION_SIZE"])

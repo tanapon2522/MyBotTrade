@@ -25,7 +25,7 @@ def handle_message(event):
 
     if message_from_user == "/stop":
         try :
-            UpdateSettingBot(key="run", value=True)
+            UpdateSettingBot(key="run", value=False)
 
             line_bot_api.reply_message(
                 event.reply_token,
@@ -35,3 +35,34 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text="เกิดข้อผิดพลาด {}".format(e)))
+
+    elif message_from_user == "/start":
+        try :
+            UpdateSettingBot(key="run", value=True)
+
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="การเปลี่ยนแปลงเสร็จสิ้น"))
+
+        except Exception as e:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="เกิดข้อผิดพลาด {}".format(e)))   
+
+    elif "/p" in message_from_user:        
+        try :
+            #"/p 30"
+            P_size = message_from_user.split(" ")[1]
+
+            UpdateSettingBot(key="Positionsize", value=float(P_size))
+
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="การเปลี่ยนแปลงเสร็จสิ้น"))
+
+        except Exception as e:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="เกิดข้อผิดพลาด {}".format(e)))   
+        
+             

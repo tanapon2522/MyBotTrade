@@ -1,9 +1,10 @@
 from flask import Flask , request
-from BinanceTrade.Trade import client
-import json , time
+import json 
 
 from BinanceTrade.Trade import ReceiveSignals
 from line.notify import sendmsg
+
+from DB.Firebasedb import GetDataSettingBot
 
 app = Flask(__name__)
 
@@ -17,18 +18,11 @@ def SIGNALS_RECEIVER():
         msg = request.data.decode("utf-8")
         json_msg = json.loads(msg) # <== dictionary
         print(json_msg['SYMBOL']) # <== dictionary
-
-        prices = client.get_all_tickers()
-        for p in prices:     
-            if p["symbol"] == json_msg["SYMBOL"]:
-               print(p['symbol'],float(p['price']))
-               json_msg['POSITION_SIZE'] = round(float(json_msg['POSITION_SIZE'])/(float(p['price'])),6)
-        
-        json_msg['TIME'] = str(time.asctime())
         print(json_msg)
 
-        # get data firebase เพื่อดูว่า Autotrading == true ??
-        msg = ReceiveSignals(signal_data_dict= json_msg)
+        if GetDataSettingBot(key="run") == True :
+            # get data firebase เพื่อดูว่า Autotrading == true ??
+            msg = ReceiveSignals(signal_data_dict= json_msg)
 
         sendmsg(msg=str(json_msg))
         sendmsg(msg=msg)
