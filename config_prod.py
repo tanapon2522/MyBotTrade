@@ -3,6 +3,13 @@ import os
 API_BINANCE_KEY = os.getenv("API_BINANCE_KEY")
 API_BINANCE_SECRET = os.getenv("API_BINANCE_SECRET")
 
+API_LINE_KEY = os.getenv("API_LINE_KEY")
+API_CLIENT_SECRET = os.getenv("API_CLIENT_SECRET")
+LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")
+
+LINE_BOT_ACCESS_TOKEN = os.getenv("LINE_BOT_ACCESS_TOKEN")
+LINE_BOT_CHANNEL_SECRET = os.getenv("LINE_BOT_CHANNEL_SECRET")
+
 from firebase import Firebase
 
 firebaseConfig = {
@@ -30,10 +37,3 @@ if __name__ == '__main__':
   user = auth.refresh(user['refreshToken'])
   results = db.child("users").push(data, user['idToken'])
 
-
-API_LINE_KEY = os.getenv("API_LINE_KEY")
-API_CLIENT_SECRET = os.getenv("API_CLIENT_SECRET")
-LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")
-
-LINE_BOT_ACCESS_TOKEN = os.getenv("LINE_BOT_ACCESS_TOKEN")
-LINE_BOT_CHANNEL_SECRET = os.getenv("LINE_BOT_CHANNEL_SECRET")
