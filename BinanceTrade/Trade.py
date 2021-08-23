@@ -19,9 +19,7 @@ def BUY(symbol,position_size):
     Interger = POS_SIZE.split(".")[0]
     decimal = POS_SIZE.split(".")[1]
     dec_count = -1
-
-    while True:
-        position_size = Interger + "." + decimal[:dec_count]    
+    while True:  
         if float(position_size) > 0 :
             try:
                 if float(USDT_balance['free']) > 10:
@@ -33,7 +31,10 @@ def BUY(symbol,position_size):
                     print("BUY SUCCESS")
                     return order
             except Exception as e:
-                if e.code == -1013:
+                if ((e.code== -1013) or (e.code == -1111)):                    
+                    position_size = Interger + "." + decimal[:dec_count]
+                    if decimal[:dec_count] == "":
+                        position_size = int(interger)
                     dec_count = dec_count -1
                 else :
                     print(e.args)
@@ -60,7 +61,10 @@ def SELL(symbol,position_size=0,sell_all=True):
                 print("SELL SUCCESS")
                 return order
             except Exception as e:
-                if e.code == -1013:
+                if ((e.code== -1013) or (e.code == -1111)):                    
+                    position_size = Interger + "." + decimal[:dec_count]
+                    if decimal[:dec_count] == "":
+                        position_size = int(interger)
                     dec_count = dec_count -1
                 else :
                     print(e.args)
