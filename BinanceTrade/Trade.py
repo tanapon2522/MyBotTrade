@@ -1,5 +1,4 @@
 from binance.client import Client
-import time
 
 try :
     from config_dev import API_BINANCE_KEY , API_BINANCE_SECRET
@@ -77,9 +76,7 @@ def ReceiveSignals(signal_data_dict):
     for p in prices:     
         if p["symbol"] == signal_data_dict["SYMBOL"]:
             print(p['symbol'],float(p['price']))
-            signal_data_dict['POSITION_SIZE'] = signal_data_dict['POSITION_SIZE']/float(p['price'])
-        
-    signal_data_dict['TIME'] = str(time.asctime())
+            signal_data_dict['POSITION_SIZE'] = signal_data_dict['POSITION_SIZE']/float(p['price'])        
 
     if signal_data_dict["SIGNALS"] == "buy":
         try :   
