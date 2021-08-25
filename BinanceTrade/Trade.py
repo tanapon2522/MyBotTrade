@@ -18,6 +18,8 @@ def BUY(symbol,position_size):
     Interger = POS_SIZE.split(".")[0]
     decimal = POS_SIZE.split(".")[1]
     dec_count = -1
+    len_count = len(decimal)
+
     while True:  
         if float(position_size) > 0 :
             try:
@@ -32,8 +34,8 @@ def BUY(symbol,position_size):
             except Exception as e:
                 if ((e.code== -1013) or (e.code == -1111)):                    
                     position_size = Interger + "." + decimal[:dec_count]
-                    if decimal[:dec_count] == "":
-                        position_size = int(interger)
+                    if (len_count + dec_count) == 0:
+                        position_size = int(Interger)
                     dec_count = dec_count -1
                 else :
                     print(e.args)
@@ -47,10 +49,11 @@ def SELL(symbol,position_size=0,sell_all=True):
         POS_SIZE = client.get_asset_balance(sym)['free']
     Interger = POS_SIZE.split(".")[0]
     decimal = POS_SIZE.split(".")[1]
+    position_size = Interger + "." + decimal
     dec_count = -1
+    len_count = len(decimal)
 
-    while True:
-        position_size = Interger + "." + decimal[:dec_count]
+    while True:        
         if float(position_size) > 0:
             try:
                 order = client.order_market_sell(
@@ -62,8 +65,8 @@ def SELL(symbol,position_size=0,sell_all=True):
             except Exception as e:
                 if ((e.code== -1013) or (e.code == -1111)):                    
                     position_size = Interger + "." + decimal[:dec_count]
-                    if decimal[:dec_count] == "":
-                        position_size = int(interger)
+                    if (len_count + dec_count) == 0:
+                        position_size = int(Interger)
                     dec_count = dec_count -1
                 else :
                     print(e.args)

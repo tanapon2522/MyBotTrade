@@ -1,5 +1,5 @@
 from BinanceTrade.Trade import client
-import time
+import json
 from BinanceTrade.Trade import ReceiveSignals
 from line.notify import sendmsg
 
@@ -80,8 +80,7 @@ from line.notify import sendmsg
 
 if __name__ == "__main__":
 
-    time_alert = time.asctime()
-    data = {'SYMBOL': 'C98USDT', 'SIGNALS': 'buy', 'Price': '5.6556', 'POSITION_SIZE': 17.709552709827207}
+    data = {"SYMBOL": "C98USDT", "SIGNALS": "sell", "Price": "5.49013"}
     
     msg = ReceiveSignals(signal_data_dict=data)
 
