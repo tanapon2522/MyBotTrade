@@ -81,8 +81,7 @@ from line.notify import sendmsg
 if __name__ == "__main__":
 
     time_alert = time.asctime()
-    data = {"SYMBOL":"ADAUSDT",
-    "SIGNALS":"sell"}
+    data = {'SYMBOL': 'C98USDT', 'SIGNALS': 'buy', 'Price': '5.6556', 'POSITION_SIZE': 17.709552709827207}
     
     msg = ReceiveSignals(signal_data_dict=data)
 
