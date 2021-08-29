@@ -80,7 +80,7 @@ from line.notify import sendmsg
 
 if __name__ == "__main__":
 
-    data = {"SYMBOL": "C98USDT", "SIGNALS": "sell", "Price": "5.49013"}
+    data = {"SYMBOL": "ATAUSDT", "SIGNALS": "sell"}
     
     msg = ReceiveSignals(signal_data_dict=data)
 

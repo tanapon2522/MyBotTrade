@@ -34,6 +34,12 @@ def UpdateSettingBot(key,value):
     elif key == "Positionsize":
         data = {"Positionsize" : value}
         db.child("SETTINGBOT").update(data)
+    elif key == "CBuy":
+        data = {"CBuy" : value}
+        db.child("SETTINGBOT").update(data)
+    elif key == "CSell":
+        data = {"CSell" : value}
+        db.child("SETTINGBOT").update(data)
 
 def GetDataSettingBot(key):
     res = db.get().val()["SETTINGBOT"][key]
