@@ -82,9 +82,9 @@ def ReceiveSignals(signal_data_dict):
             signal_data_dict['POSITION_SIZE'] = signal_data_dict['POSITION_SIZE']/float(p['price'])
 
     cbuy = GetDataSettingBot(key="CBuy")
-    csell = GetDataSettingBot(key="CSell")       
-
-    if (signal_data_dict["SIGNALS"] == "buy") and cbuy:
+    csell = GetDataSettingBot(key="CSell") 
+    
+    if ( signal_data_dict["SIGNALS"] == "buy") and cbuy:
         try :   
             UpdateSettingBot(key="CBuy",value = False)
             UpdateSettingBot(key="CSell",value = True)
