@@ -26,10 +26,10 @@ def SIGNALS_RECEIVER():
 
         cbuy = GetDataSettingBot(key="CBuy")
         csell = GetDataSettingBot(key="CSell")
-        if (json_msg["SIGNALS"]=="buy") and not cbuy:
+        if (json_msg["SIGNALS"]=="buy") and cbuy:
             sendmsg(msg=str(json_msg))
             sendmsg(msg=msg)
-        elif (json_msg["SIGNALS"]=="sell") and not csell:
+        elif (json_msg["SIGNALS"]=="sell") and csell:
             sendmsg(msg=str(json_msg))
             sendmsg(msg=msg)
 
