@@ -4,7 +4,7 @@ import json
 from BinanceTrade.Trade import ReceiveSignals
 from line.notify import sendmsg
 
-from DB.Firebasedb import GetDataSettingBot
+from DB.Firebasedb import GetDataSettingBot , UpdateSettingBot
 
 app = Flask(__name__)
 
@@ -27,9 +27,13 @@ def SIGNALS_RECEIVER():
         cbuy = GetDataSettingBot(key="CBuy")
         csell = GetDataSettingBot(key="CSell")
         if (json_msg["SIGNALS"]=="buy") and cbuy:
+            UpdateSettingBot(key="CBuy",value = False)
+            UpdateSettingBot(key="CSell",value = True)
             sendmsg(msg=str(json_msg))
             sendmsg(msg=msg)
         elif (json_msg["SIGNALS"]=="sell") and csell:
+            UpdateSettingBot(key="CBuy",value = True)
+            UpdateSettingBot(key="CSell",value = False)
             sendmsg(msg=str(json_msg))
             sendmsg(msg=msg)
 

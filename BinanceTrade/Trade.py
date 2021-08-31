@@ -5,7 +5,7 @@ try :
 except Exception:
     from config_prod import API_BINANCE_KEY , API_BINANCE_SECRET
 
-from DB.Firebasedb import GetDataSettingBot , UpdateSettingBot
+from DB.Firebasedb import GetDataSettingBot
 
 client = Client( API_BINANCE_KEY , API_BINANCE_SECRET )
 
@@ -85,18 +85,14 @@ def ReceiveSignals(signal_data_dict):
     csell = GetDataSettingBot(key="CSell") 
     
     if ( signal_data_dict["SIGNALS"] == "buy") and cbuy:
-        try :   
-            UpdateSettingBot(key="CBuy",value = False)
-            UpdateSettingBot(key="CSell",value = True)
+        try :               
             BUY(symbol=signal_data_dict["SYMBOL"],position_size=signal_data_dict["POSITION_SIZE"])
             return "BUY {} SUCCESS! \nSIZE : {}".format(signal_data_dict["SYMBOL"],signal_data_dict["POSITION_SIZE"])
         except Exception as e:
             return "เกิดข้อผิดพลาด {}".format(e.args)
 
     elif (signal_data_dict["SIGNALS"] == "sell") and csell :
-        try :
-            UpdateSettingBot(key="CBuy",value = True)
-            UpdateSettingBot(key="CSell",value = False)
+        try :            
             SELL(symbol=signal_data_dict["SYMBOL"])
             return "SELL {} SUCCESS".format(signal_data_dict["SYMBOL"])
         except Exception as e:
