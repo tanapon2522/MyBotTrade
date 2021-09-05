@@ -32,14 +32,16 @@ def BUY(symbol,position_size):
                     print("BUY SUCCESS")
                     return order
             except Exception as e:
-                if ((e.code== -1013) or (e.code == -1111)):                    
-                    position_size = Interger + "." + decimal[:dec_count]
-                    if (len_count + dec_count) == 0:
-                        position_size = int(Interger)
-                    dec_count = dec_count -1
-                else :
+                if (not(e.code== -1013) and not (e.code == -1111)):                   
                     print(e.args)
                     return "เกิดข้อผิดพลาด"
+                position_size = Interger + "." + decimal[:dec_count]
+                if (len_count + dec_count) == 0:
+                    position_size = int(Interger)
+                dec_count = dec_count -1
+                # else :
+                #     print(e.args)
+                #     return "เกิดข้อผิดพลาด"
 
 def SELL(symbol,position_size=0,sell_all=True):
     POS_SIZE = str(position_size)
@@ -63,14 +65,16 @@ def SELL(symbol,position_size=0,sell_all=True):
                 print("SELL SUCCESS")
                 return order
             except Exception as e:
-                if ((e.code== -1013) or (e.code == -1111)):                    
-                    position_size = Interger + "." + decimal[:dec_count]
-                    if (len_count + dec_count) == 0:
-                        position_size = int(Interger)
-                    dec_count = dec_count -1
-                else :
+                if (not(e.code== -1013) and not (e.code == -1111)):
                     print(e.args)
                     return "เกิดข้อผิดพลาด"
+                position_size = Interger + "." + decimal[:dec_count]
+                if (len_count + dec_count) == 0:
+                    position_size = int(Interger)
+                dec_count = dec_count -1
+                # else :
+                #     print(e.args)
+                #     return "เกิดข้อผิดพลาด"
                
 def ReceiveSignals(signal_data_dict):
 
