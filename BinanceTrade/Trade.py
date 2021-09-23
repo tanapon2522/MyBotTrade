@@ -83,7 +83,9 @@ def ReceiveSignals(signal_data_dict):
     for p in prices:     
         if p["symbol"] == signal_data_dict["SYMBOL"]:
             print(p['symbol'],float(p['price']))
+            signal_data_dict['Price'] = float(p['price'])
             signal_data_dict['POSITION_SIZE'] = signal_data_dict['POSITION_SIZE']/float(p['price'])
+            break
 
     cbuy = GetDataSettingBot(key="CBuy")
     csell = GetDataSettingBot(key="CSell") 
