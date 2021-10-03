@@ -122,7 +122,8 @@ if __name__ == "__main__":
 
 
     data = {"SYMBOL": "BTCUSDT", "SIGNALS": "buy"}
-    sym = data["SYMBOL"]    
+    sym = data["SYMBOL"]
+    Symbol = sym.split("USDT")[0]
     prices = client.get_all_tickers()
     for p in prices :    
         if p['symbol'] == sym:
@@ -165,32 +166,45 @@ if __name__ == "__main__":
         cbuy = GetDataSettingBot(key="CBuy")                  
         if (data["SIGNALS"]=="buy") and cbuy:                                 
             msg = ReceiveSignals(signal_data_dict= data)
+            amounttmp = float(client.get_asset_balance(Symbol)['free'])
             pricetmp = data["Price"]
-            print(pricetmp)
-            #print(pricetmp*(1+(1/1000)))
-            pricetmp = pricetmp*(1+(1/1000))
+            sumtmp = pricetmp * amounttmp                        
+            print(sym,pricetmp,sumtmp)
+            #print(sym,amouttmp*(1+(1/1000)))
+            #print(sym,pricetmp)
+            #print(sym,pricetmp*(1+(1/1000)))
+            #pricetmp = pricetmp*(1+(1/1000))
             sendmsg(msg=str(data))
             sendmsg(msg=msg)                               
             UpdateSettingBot(key="CBuy",value = False)
             UpdateSettingBot(key="CSell",value = True)
             
         # ตรวจ จุด เข้า sell
+        
         checksell = False
-        while checksell == False :
+        while checksell == False :            
             time.sleep(5)
             prices = client.get_all_tickers()
             for p in prices :    
                 if p['symbol'] == sym:
-                    print(p['symbol'],float(p['price']))
-                    pricecheck = float(p['price'])
+                    print(p['symbol'],float(p['price']))                        
+                    pricetmp = float(p['price'])
                     break        
-            if (pricetmp < pricecheck) :                
+            amountcheck = float(client.get_asset_balance(Symbol)['free'])
+            sumcheck = pricetmp * amountcheck
+            if (sumtmp < sumcheck) :                
+                prices = client.get_all_tickers()
+                for p in prices :    
+                    if p['symbol'] == sym:
+                        print(p['symbol'],float(p['price']),sumcheck)
+                        
+                        pricectmp = float(p['price'])
+                        break        
                 data["SIGNALS"] = "sell"
-                UpdateSettingBot(key="CSell",value = True)
-                pricetmp = pricecheck
+                UpdateSettingBot(key="CSell",value = True)                
                 checksell = True 
             else :
-                print(pricecheck)
+                print(sym,amountcheck)
             
         csell = GetDataSettingBot(key="CSell")            
         if (data["SIGNALS"]=="sell") and csell:                                               
