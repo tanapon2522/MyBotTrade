@@ -121,7 +121,7 @@ if __name__ == "__main__":
     #ทดลอง รับค่า
 
 
-    data = {"SYMBOL": "BTCUSDT", "SIGNALS": "buy"}
+    data = {"SYMBOL": "POLYUSDT", "SIGNALS": "buy"}
     sym = data["SYMBOL"]
     Symbol = sym.split("USDT")[0]
     prices = client.get_all_tickers()
@@ -168,7 +168,7 @@ if __name__ == "__main__":
             msg = ReceiveSignals(signal_data_dict= data)
             amounttmp = float(client.get_asset_balance(Symbol)['free'])
             pricetmp = data["Price"]
-            sumtmp = pricetmp * amounttmp                        
+            sumtmp = round(pricetmp * amounttmp,6)
             print(sym,pricetmp,sumtmp)
             #print(sym,amouttmp*(1+(1/1000)))
             #print(sym,pricetmp)
@@ -182,35 +182,45 @@ if __name__ == "__main__":
         # ตรวจ จุด เข้า sell
         
         checksell = False
+        countprofit = 1
+        countprotect = 2
+        profitsum = float(sumtmp*(1+(countprofit/100)))
+        protectsum =float(sumtmp*(1-(countprotect/100)))
+        print("profit sum = ",profitsum)
+        print("protect sum = ",protectsum)
         while checksell == False :            
             time.sleep(5)
             prices = client.get_all_tickers()
             for p in prices :    
                 if p['symbol'] == sym:
-                    print(p['symbol'],float(p['price']))                        
-                    pricetmp = float(p['price'])
-                    break        
-            amountcheck = float(client.get_asset_balance(Symbol)['free'])
-            sumcheck = pricetmp * amountcheck
+                    #print(p['symbol'],float(p['price']))                        
+                    pricecheck = round(float(p['price']),6)
+                    break                    
+            sumcheck = round(pricecheck * amounttmp,6)
+            
             if (sumtmp < sumcheck) :                
                 prices = client.get_all_tickers()
                 for p in prices :    
                     if p['symbol'] == sym:
-                        print(p['symbol'],float(p['price']),sumcheck)
+                        print(p['symbol'],pricetmp,float(p['price']),sumtmp,sumcheck)
                         
-                        pricectmp = float(p['price'])
+                        priceccheck = round(float(p['price']),6)
+                        data["price"] = pricecheck
                         break        
                 data["SIGNALS"] = "sell"
                 UpdateSettingBot(key="CSell",value = True)                
                 checksell = True 
+
             else :
-                print(sym,amountcheck)
+                print(sym,pricetmp,pricecheck,sumtmp,sumcheck)
             
         csell = GetDataSettingBot(key="CSell")            
         if (data["SIGNALS"]=="sell") and csell:                                               
-            msg = ReceiveSignals(signal_data_dict= data)
-            pricetmp = data["Price"]
-            print(pricetmp)                
+            msg = ReceiveSignals(signal_data_dict= data)                    
+            sumcheck = round(pricecheck * amounttmp,6)
+            profit = round(sumcheck - sumtmp,6)
+            print("{} Buy price at {} Sell price at {} Buy amount at {} Sell amount at {}".format(sym,pricetmp,pricecheck,sumtmp,sumcheck))
+            print("profit = ",profit)                
             sendmsg(msg=str(data))
             sendmsg(msg=msg)                      
             UpdateSettingBot(key="CBuy",value = True)
